@@ -1,6 +1,7 @@
 require random.fs
 
 require raylib.4th
+require pice-handle.4th
 require pices.4th
 require game.4th
 require pice-choice.4th
@@ -36,7 +37,8 @@ require io.4th
     fdup Max-countdown f>
     if
       fdrop 0e
-      game-update if next-pice then
+      game-update
+      if add-current-pice next-pice then
     then
 
     draw

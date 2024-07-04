@@ -6,6 +6,12 @@
 
 variable Game-field COLS ROWS * allot
 
+: pice-to-field-ind ( n -- n )
+  dup 4 mod Pice-X +
+  swap 4 / Pice-Y + COLS * +
+  Game-field +
+;
+
 : wall-collision? ( -- f )
   Pice-X Pice-off-X + 0<
   Pice-X Pice-width + COLS >
@@ -13,8 +19,21 @@ variable Game-field COLS ROWS * allot
   or or
 ;
 
+: block-collision? ( -- f )
+  16 0 ?do
+    Pice-buffer i + c@
+    if
+      i pice-to-field-ind c@
+      if
+        -1 unloop exit
+      then
+    then
+  loop
+  0
+;
+
 : collision? ( -- f )
-  wall-collision? ;
+  wall-collision? block-collision? or ;
 
 : move-pice-sideways ( f -- ) \ direction
   dup if
@@ -67,4 +86,17 @@ variable Game-field COLS ROWS * allot
 
 : game-update ( -- f )
   move-pice-down
+;
+
+: add-current-pice ( -- )
+  16 0 ?do
+    Pice-buffer i + c@
+
+    dup if
+      \ transform to position in Game-field
+      i pice-to-field-ind c!
+    else
+      drop
+    then
+  loop
 ;

@@ -70,7 +70,7 @@ FIELD-OFFSET-Y 10 - s>f Field-rect rectangle-y sf!
 ;
 
 : draw-active-pice ( -- )
-  15 0 ?do
+  16 0 ?do
     Pice-buffer i + c@
     dup if 
       i 4 mod Pice-X +
