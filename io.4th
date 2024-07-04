@@ -25,8 +25,9 @@
         RIGHT rotate-pice
       endof
 
-      KEY-D of
-        move-pice-down
+      \ drop \
+      KEY-SPACE of
+        drop-pice
       endof
     endcase
   repeat

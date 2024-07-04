@@ -84,6 +84,12 @@ variable Game-field COLS ROWS * allot
   then
 ;
 
+: drop-pice ( -- )
+  begin
+    move-pice-down invert
+  while repeat
+;
+
 : game-update ( -- f )
   move-pice-down
 ;
