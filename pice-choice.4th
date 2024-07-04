@@ -11,8 +11,7 @@
 variable Next-pice-buffer 16 allot \ 4 * 4 chars
 
 : random-next-pice ( -- )
-  7 random to Next-pice-shape
-;
+  7 random to Next-pice-shape ;
 
 : next-pice ( -- )
   \ set word to update with

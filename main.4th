@@ -7,6 +7,8 @@ require pice-choice.4th
 require draw.4th
 require io.4th
 
+0.1e fvalue Max-countdown
+
 \ \ \ \ \ \ \ \ \ \
 \ INITIALIZE STUFF \
 \ \ \ \ \ \ \ \ \ \ \
@@ -22,17 +24,22 @@ require io.4th
 \ MAIN LOOPING \
 \ \ \ \ \ \ \ \ \
 : main ( -- )
+  0e \ countdown
   begin
-
     rl:window-should-close End? or
+    if bye then
+    read-keys
+
+    \ count the down
+    rl:get-frame-time f+
+    \ fdup f>s Max-countdown mod invert
+    fdup Max-countdown f>
     if
-      bye
-    else
-      read-keys
-      game-update
-      draw
+      fdrop 0e
+      game-update if next-pice then
     then
 
+    draw
   again
 ;
 

@@ -12,7 +12,9 @@ c-function rl:init-window InitWindow n n s -- void ( width height name -- )
 c-function rl:close-window CloseWindow -- void
 c-function rl:window-should-close WindowShouldClose -- n
 
+\ fps \
 c-function rl:set-target-fps SetTargetFPS n -- void
+c-function rl:get-frame-time GetFrameTime -- r
 
 \ drawing \
 c-function rl:begin-drawing BeginDrawing -- void
