@@ -42,7 +42,8 @@ require io.4th
       if add-current-pice next-pice then
     then
 
-    draw
+    \ if animation playing
+    draw if fdrop 0e then
   again
 ;
 

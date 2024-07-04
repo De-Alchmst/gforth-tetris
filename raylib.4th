@@ -52,7 +52,6 @@ begin-structure rectangle%
   lfield: rectangle-y
   lfield: rectangle-width
   lfield: rectangle-height
-  lfield: rectangle-nothing
 end-structure
 
 \ \ \ \ \

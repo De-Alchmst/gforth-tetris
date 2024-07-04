@@ -7,6 +7,7 @@
 
 30 constant TILE-SIZE
 WHITE constant BG-COLOR
+GRAY constant FG-COLOR
 
 \ setup rectangles \
 create Field-rect rectangle% allot
@@ -18,6 +19,10 @@ WINDOW-WIDTH Field-rect rectangle-width sf@ f>s - 2/ constant FIELD-OFFSET-X
 FIELD-OFFSET-X 10 - s>f Field-rect rectangle-x sf!
 WINDOW-HEIGHT Field-rect rectangle-height sf@ f>s - 2/ constant FIELD-OFFSET-Y
 FIELD-OFFSET-Y 10 - s>f Field-rect rectangle-y sf!
+
+255 203 0 255 >Color constant Beam-color
+TILE-SIZE 2 / constant BEAM-WIDTH
+TILE-SIZE BEAM-WIDTH - 2/ constant BEAM-OFFSET
 
 \ \ \ \ \ \
 \ DRAWING \
@@ -40,7 +45,7 @@ FIELD-OFFSET-Y 10 - s>f Field-rect rectangle-y sf!
   \ color
   case
     0 of
-      GRAY rl:draw-rectangle-lines
+      FG-COLOR rl:draw-rectangle-lines
       exit
     endof
 
@@ -58,7 +63,7 @@ FIELD-OFFSET-Y 10 - s>f Field-rect rectangle-y sf!
 
 : draw-field ( -- )
   \ border
-  Field-rect 10e GRAY rl:draw-rectangle-lines-ex
+  Field-rect 10e FG-COLOR rl:draw-rectangle-lines-ex
 
   \ contents
   COLS ROWS * 0 ?do
@@ -82,11 +87,31 @@ FIELD-OFFSET-Y 10 - s>f Field-rect rectangle-y sf!
   loop
 ;
 
+: break-anim ( -- )
+  0
+  rows-to-break-row TILE-SIZE * FIELD-OFFSET-Y + BEAM-OFFSET +
+  WINDOW-WIDTH BEAM-WIDTH Beam-color
+  rl:draw-rectangle
+
+  Beam-color color-a c@
+  \ lower alpha
+  dup 5 > if
+    15 - Beam-color color-a c!
+  \ finish animation
+  else
+    drop 255 Beam-color color-a c!
+    rows-to-break-shift downshift-field
+  then
+;
+
 \ call the all the stuff \
-: draw ( -- )
+: draw ( -- f ) \ if animation
   rl:begin-drawing
   draw-bg
   draw-field
+  \ break animation
+  rows-to-break-len
+  dup if break-anim then
   draw-active-pice
   rl:end-drawing
 ;

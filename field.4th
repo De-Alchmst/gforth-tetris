@@ -1,7 +1,30 @@
 10 constant COLS
 20 constant ROWS
 
-variable Game-field COLS ROWS * allot
+create Game-field COLS ROWS * allot
+create Rows-to-break 4 cells allot
+0 value Rows-to-break-len
+
+: rows-to-break-push ( n -- )
+  \ shift current entries
+  0 Rows-to-break-len ?do
+    Rows-to-break i 1- cells + @
+    Rows-to-break i cells + !
+  1 -loop
+
+  Rows-to-break !
+  1 +to Rows-to-break-len
+;
+
+: rows-to-break-shift ( -- n )
+  -1 +to Rows-to-break-len
+  Rows-to-break Rows-to-break-len cells + @
+;
+
+: rows-to-break-row ( -- n )
+  Rows-to-break Rows-to-break-len 1- cells + @
+  COLS / 
+;
 
 : pice-to-field-ind ( n -- n )
   dup 4 mod Pice-X +
@@ -10,7 +33,7 @@ variable Game-field COLS ROWS * allot
 ;
 
 : downshift-field ( n -- ) \ index of beginning of removed line
-  -1 swap ?do
+  -1 swap 1- ?do \ don't move last one, will appear on line bellow
     Game-field i + c@
     Game-field i + COLS + c!
   1 -loop
@@ -31,7 +54,7 @@ variable Game-field COLS ROWS * allot
       then
     loop
 
-    if downshift-field else drop then
+    if rows-to-break-push else drop then
       
   loop
 ;
