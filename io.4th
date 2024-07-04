@@ -11,6 +11,14 @@
       KEY-Q of
         -1 to End?
       endof
+
+      \ pice movement \
+      KEY-J of
+        LEFT move-pice
+      endof
+      KEY-L of
+        RIGHT move-pice
+      endof
     endcase
   repeat
   drop

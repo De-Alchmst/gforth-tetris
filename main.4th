@@ -1,6 +1,9 @@
+require random.fs
+
 require raylib.4th
 require pices.4th
 require game.4th
+require pice-choice.4th
 require draw.4th
 require io.4th
 
@@ -11,6 +14,8 @@ require io.4th
   WINDOW-WIDTH WINDOW-HEIGHT s" tetris clone in gforth" rl:init-window
   60 rl:set-target-fps
   RIGHT set-pice-J
+  random-next-pice
+  next-pice
 ;
 
 \ \ \ \ \ \ \ \
@@ -18,17 +23,17 @@ require io.4th
 \ \ \ \ \ \ \ \ \
 : main ( -- )
   begin
-    -1
-  while
 
-    rl:window-should-close End? or if
+    rl:window-should-close End? or
+    if
       bye
     else
       read-keys
+      game-update
       draw
     then
 
-  repeat
+  again
 ;
 
 \ \ \ \ \ \ \ \ \ \

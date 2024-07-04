@@ -44,13 +44,13 @@ FIELD-OFFSET-Y 10 - s>f Field-rect rectangle-y sf!
       exit
     endof
 
-    1 of
-      RED
-    endof
-
-    2 of
-      YELLOW
-    endof
+    1 of RED endof
+    2 of YELLOW endof
+    3 of PURPLE endof
+    4 of PINK endof
+    5 of SKYBLUE endof
+    6 of GREEN endof
+    7 of BLUE endof
   endcase
 
   rl:draw-rectangle
@@ -69,10 +69,24 @@ FIELD-OFFSET-Y 10 - s>f Field-rect rectangle-y sf!
   loop
 ;
 
+: draw-active-pice ( -- )
+  15 0 ?do
+    Pice-buffer i + c@
+    dup if 
+      i 4 mod Pice-X +
+      i 4 / Pice-Y +
+      draw-block
+    else
+      drop
+    then
+  loop
+;
+
 \ call the all the stuff \
 : draw ( -- )
   rl:begin-drawing
   draw-bg
   draw-field
+  draw-active-pice
   rl:end-drawing
 ;
