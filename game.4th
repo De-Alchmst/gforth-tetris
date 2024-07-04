@@ -1,11 +1,6 @@
 0 constant LEFT
 -1 constant RIGHT
 
-10 constant COLS
-20 constant ROWS
-
-variable Game-field COLS ROWS * allot
-
 : pice-to-field-ind ( n -- n )
   dup 4 mod Pice-X +
   swap 4 / Pice-Y + COLS * +
@@ -92,17 +87,4 @@ variable Game-field COLS ROWS * allot
 
 : game-update ( -- f )
   move-pice-down
-;
-
-: add-current-pice ( -- )
-  16 0 ?do
-    Pice-buffer i + c@
-
-    dup if
-      \ transform to position in Game-field
-      i pice-to-field-ind c!
-    else
-      drop
-    then
-  loop
 ;

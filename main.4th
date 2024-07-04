@@ -3,12 +3,13 @@ require random.fs
 require raylib.4th
 require pice-handle.4th
 require pices.4th
+require field.4th
 require game.4th
 require pice-choice.4th
 require draw.4th
 require io.4th
 
-0.1e fvalue Max-countdown
+0.3e fvalue Max-countdown
 
 \ \ \ \ \ \ \ \ \ \
 \ INITIALIZE STUFF \

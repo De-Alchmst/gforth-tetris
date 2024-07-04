@@ -15,18 +15,6 @@
 
 variable Pice-buffer 16 allot \ 4 * 4 chars
 
-: rotate-pice-left ( -- )
-  Pice-rotation 1-
-  dup 0< if drop 3 then
-  to Pice-rotation
-;
-
-
-: rotate-pice-right ( -- )
-  Pice-rotation 1+ 4 mod
-  to Pice-rotation
-;
-
 : clear-pice-buffer ( -- )
   14 0 ?do
     0 Pice-buffer i + c!
@@ -47,6 +35,14 @@ variable Pice-buffer 16 allot \ 4 * 4 chars
   to Pice-off-X
 ;
 
-: add-current-pice ( -- )
-  
+: rotate-pice-left ( -- )
+  Pice-rotation 1-
+  dup 0< if drop 3 then
+  to Pice-rotation
+;
+
+
+: rotate-pice-right ( -- )
+  Pice-rotation 1+ 4 mod
+  to Pice-rotation
 ;
