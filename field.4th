@@ -5,6 +5,12 @@ create Game-field COLS ROWS * allot
 create Rows-to-break 4 cells allot
 0 value Rows-to-break-len
 
+: clear-field ( -- )
+  COLS ROWS * 0 ?do
+    0 Game-field i + c!
+  loop
+;
+
 : rows-to-break-push ( n -- )
   \ shift current entries
   0 Rows-to-break-len ?do

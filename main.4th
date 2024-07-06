@@ -22,13 +22,12 @@ require io.4th
 \ \ \ \ \ \ \ \ \ \ \
 : init ( -- )
   60 rl:set-target-fps
-  RIGHT set-pice-J
-  random-next-pice
-  next-pice
+  reset-next-pice
 ;
 
 : handle-play ( r -- r ) \ timer
-  read-keys-play
+  \ don't update keys during animation
+  fdup 0e f> if read-keys-play then
 
   \ count the down
   rl:get-frame-time f+
@@ -48,9 +47,11 @@ require io.4th
   draw-game if fdrop 0e then
 ;
 
-: handle-game-over ( -- )
+: handle-game-over ( n -- n ) \ timer
   read-keys-game-over
   draw-game-over
+
+  fdrop 0e \ keep timer at 0
 ;
 
 : handle-menu ( -- )

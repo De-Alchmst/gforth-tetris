@@ -50,6 +50,10 @@
       KEY-Q of
         -1 to End?
       endof
+
+      KEY-R of
+        reset-game
+      endof
     endcase
   repeat
   drop

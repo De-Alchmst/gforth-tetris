@@ -162,5 +162,17 @@ TILE-SIZE BEAM-WIDTH - 2/ constant BEAM-OFFSET
   \ draw game over text
   GAME-OVER-TEXT GAME-OVER-TEXT-X GAME-OVER-TEXT-Y MAIN-TEXT-SIZE
   RED rl:draw-text
+
+  \ draw score
+  s\" Score : 10000\0" drop 40 400 SECONDARY-TEXT-SIZE FG-COLOR rl:draw-text
+
+  \ draw hints
+  s\" R - Reset\0" drop 40 400 SECONDARY-TEXT-SIZE 10 + +
+  SECONDARY-TEXT-SIZE FG-COLOR rl:draw-text
+  s\" M - Menu\0" drop 40 400 SECONDARY-TEXT-SIZE 10 + 2* +
+  SECONDARY-TEXT-SIZE FG-COLOR rl:draw-text
+  s\" S - Scores\0" drop 40 400 SECONDARY-TEXT-SIZE 10 + 3 * +
+  SECONDARY-TEXT-SIZE FG-COLOR rl:draw-text
+
   rl:end-drawing
 ;

@@ -37,3 +37,12 @@ variable Next-pice-buffer 16 allot \ 4 * 4 chars
   
   random-next-pice
 ;
+
+: reset-next-pice ( -- )
+  random-next-pice next-pice ;
+
+: reset-game ( -- )
+  clear-field
+  reset-next-pice
+  PLAYING to Game-mode
+;
