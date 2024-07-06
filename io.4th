@@ -1,3 +1,10 @@
+: reset-game ( -- )
+  clear-field
+  reset-next-pice
+  reset-pice-count
+  PLAYING to Game-mode
+;
+
 0 value End?
 
 : read-keys-play ( -- )

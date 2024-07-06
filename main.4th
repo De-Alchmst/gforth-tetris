@@ -12,19 +12,23 @@ require pices.4th
 require field.4th
 require game.4th
 require pice-choice.4th
+require pice-preview.4th
 require draw.4th
-require io.4th
-
-0.3e fvalue Max-countdown
+require io.4th \ <- game-reset is here
 
 \ \ \ \ \ \ \ \ \ \
 \ INITIALIZE STUFF \
 \ \ \ \ \ \ \ \ \ \ \
+0.3e fvalue Max-countdown
+
 : init ( -- )
   60 rl:set-target-fps
   reset-next-pice
 ;
 
+\ \ \ \ \ \ \
+\ GAME STUFF \
+\ \ \ \ \ \ \ \
 : handle-play ( r -- r ) \ timer
   \ don't update keys during animation
   fdup 0e f> if read-keys-play then

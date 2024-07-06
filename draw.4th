@@ -32,7 +32,7 @@ GAME-OVER-TEXT MAIN-TEXT-SIZE rl:measure-text
 
 WINDOW-HEIGHT MAIN-TEXT-SIZE - 2/ constant GAME-OVER-TEXT-Y
 
-s\" J - Left | L - Right | K - Rotate | SPACE - Drop\0"
+s\" J - Left | L - Right | K - Rotate | SPACE - Drop P - Pause\0"
 drop constant GAME-HINT-TEXT
 WINDOW-WIDTH
 GAME-HINT-TEXT SECONDARY-TEXT-SIZE rl:measure-text
@@ -55,15 +55,24 @@ TILE-SIZE BEAM-WIDTH - 2/ constant BEAM-OFFSET
   BG-COLOR rl:clear-background
 ;
 
-: draw-block ( n x y -- )
+: draw-block-offset ( n x y offX offY -- )
   \ positions
-  TILE-SIZE * FIELD-OFFSET-Y +
-  swap
-  TILE-SIZE * FIELD-OFFSET-X +
-  swap
-  rot
+  rot TILE-SIZE * +
+  rot TILE-SIZE * rot +
+  \ n Y X
+  swap rot
   TILE-SIZE TILE-SIZE
   rot
+  \ X Y W H n
+
+\   \ positions
+\   TILE-SIZE * FIELD-OFFSET-Y +
+\   swap
+\   TILE-SIZE * FIELD-OFFSET-X +
+\   swap
+\   rot
+\   TILE-SIZE TILE-SIZE
+\   rot
 
   \ color
   case
@@ -84,6 +93,9 @@ TILE-SIZE BEAM-WIDTH - 2/ constant BEAM-OFFSET
   rl:draw-rectangle
 ;
 
+: draw-block-field ( n x y -- )
+  FIELD-OFFSET-X FIELD-OFFSET-Y draw-block-offset ;
+
 : draw-field ( -- )
   \ border
   Field-rect 10e FG-COLOR rl:draw-rectangle-lines-ex
@@ -93,7 +105,7 @@ TILE-SIZE BEAM-WIDTH - 2/ constant BEAM-OFFSET
     Game-field i + c@
     i COLS mod
     i COLS /
-    draw-block
+    draw-block-field
   loop
 ;
 
@@ -103,7 +115,7 @@ TILE-SIZE BEAM-WIDTH - 2/ constant BEAM-OFFSET
     dup if 
       i 4 mod Pice-X +
       i 4 / Pice-Y +
-      draw-block
+      draw-block-field
     else
       drop
     then
@@ -132,6 +144,19 @@ TILE-SIZE BEAM-WIDTH - 2/ constant BEAM-OFFSET
   FG-COLOR rl:draw-text
 ;
 
+: draw-next-pice ( -- )
+  s\" Next Pice:\0" drop 10 30 SECONDARY-TEXT-SIZE FG-COLOR rl:draw-text
+
+  16 0 ?do
+    preview-buffer i + c@
+    dup if
+      i 4 mod
+      i 4 /
+      80 60 draw-block-offset
+    else drop then
+  loop
+;
+
 \ call the all the stuff \
 : draw-game-insides ( -- f )
   draw-bg
@@ -142,6 +167,7 @@ TILE-SIZE BEAM-WIDTH - 2/ constant BEAM-OFFSET
   draw-active-pice
 
   draw-game-hint
+  draw-next-pice
 ;
 
 : draw-game ( -- f ) \ if animation
