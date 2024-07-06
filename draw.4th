@@ -40,6 +40,8 @@ GAME-HINT-TEXT SECONDARY-TEXT-SIZE rl:measure-text
 
 WINDOW-HEIGHT SECONDARY-TEXT-SIZE - 10 - constant GAME-HINT-Y
 
+create Count-text 2 cells allot
+
 \ other \
 255 203 0 255 >Color constant Beam-color
 TILE-SIZE 2 / constant BEAM-WIDTH
@@ -64,15 +66,6 @@ TILE-SIZE BEAM-WIDTH - 2/ constant BEAM-OFFSET
   TILE-SIZE TILE-SIZE
   rot
   \ X Y W H n
-
-\   \ positions
-\   TILE-SIZE * FIELD-OFFSET-Y +
-\   swap
-\   TILE-SIZE * FIELD-OFFSET-X +
-\   swap
-\   rot
-\   TILE-SIZE TILE-SIZE
-\   rot
 
   \ color
   case
@@ -144,17 +137,57 @@ TILE-SIZE BEAM-WIDTH - 2/ constant BEAM-OFFSET
   FG-COLOR rl:draw-text
 ;
 
-: draw-next-pice ( -- )
-  s\" Next Pice:\0" drop 10 30 SECONDARY-TEXT-SIZE FG-COLOR rl:draw-text
-
+: draw-pice-buf-pos { a x y -- }
   16 0 ?do
-    preview-buffer i + c@
+    a i + c@
     dup if
       i 4 mod
       i 4 /
-      80 60 draw-block-offset
+      x y draw-block-offset
     else drop then
   loop
+;
+
+: draw-pice-pos ( n x y -- )
+  rot pice-to-buf -rot draw-pice-buf-pos
+;
+
+: draw-next-pice ( -- )
+  s\" Next Pice:\0" drop 10 30 SECONDARY-TEXT-SIZE FG-COLOR rl:draw-text
+  preview-buffer 80 60 draw-pice-buf-pos
+;
+
+: count-reset ( -- )
+  s\" Count:     \0" Count-text swap move ; \ move ( src dest len -- )
+
+: count-display ( n x y -- )
+  count-reset
+  rot s>d <# #s #> \ convert number to string
+  Count-text 7 + swap move \ copy to buffer
+  Count-text -rot SECONDARY-TEXT-SIZE FG-COLOR rl:draw-text
+;
+
+: draw-pice-count ( -- )
+  I-PICE 700 50 draw-pice-pos
+  I-pice-count 860 85 count-display
+
+  J-PICE 710 100 draw-pice-pos
+  J-pice-count 830 150 count-display
+
+  L-PICE 750 190 draw-pice-pos
+  L-pice-count 860 225 count-display
+
+  T-PICE 700 260 draw-pice-pos
+  T-pice-count 830 300 count-display
+
+  O-PICE 780 350 draw-pice-pos
+  O-pice-count 860 370 count-display
+
+  S-PICE 720 420 draw-pice-pos
+  S-pice-count 830 440 count-display
+
+  Z-PICE 760 490 draw-pice-pos
+  Z-pice-count 860 510 count-display
 ;
 
 \ call the all the stuff \
@@ -168,6 +201,7 @@ TILE-SIZE BEAM-WIDTH - 2/ constant BEAM-OFFSET
 
   draw-game-hint
   draw-next-pice
+  draw-pice-count
 ;
 
 : draw-game ( -- f ) \ if animation

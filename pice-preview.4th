@@ -35,8 +35,8 @@ create Z-preview 7 c, 7 c, 0 c, 0 c,
                  0 c, 0 c, 0 c, 0 c,
                  0 c, 0 c, 0 c, 0 c,
 
-: preview-buffer ( -- a )
-  Next-pice-shape case
+: pice-to-buf ( n -- a )
+  case
     I-PICE of I-preview endof
     J-PICE of J-preview endof
     L-PICE of L-preview endof
@@ -46,3 +46,6 @@ create Z-preview 7 c, 7 c, 0 c, 0 c,
     Z-PICE of Z-preview endof
   endcase
 ;
+
+: preview-buffer ( -- a )
+  Next-pice-shape  pice-to-buf ;
