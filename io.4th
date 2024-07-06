@@ -1,6 +1,6 @@
 0 value End?
 
-: read-keys ( -- )
+: read-keys-play ( -- )
   begin
     \ read through all qued keys (0 on end)
     rl:get-key-pressed
@@ -29,7 +29,28 @@
       KEY-SPACE of
         drop-pice
       endof
+
+      \ debug \
+      KEY-E of
+        GAME-OVER to Game-mode
+      endof
     endcase
   repeat
   drop
 ;
+
+: read-keys-game-over ( -- )
+  begin
+    \ read through all qued keys (0 on end)
+    rl:get-key-pressed
+    dup
+  while
+    case
+      \ exit \
+      KEY-Q of
+        -1 to End?
+      endof
+    endcase
+  repeat
+  drop
+; 

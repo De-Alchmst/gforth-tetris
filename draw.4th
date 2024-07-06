@@ -2,9 +2,6 @@
 \ SETUP \
 \ \ \ \ \
 
-720 constant WINDOW-HEIGHT
-1024 constant WINDOW-WIDTH
-
 30 constant TILE-SIZE
 WHITE constant BG-COLOR
 GRAY constant FG-COLOR
@@ -15,14 +12,40 @@ create Field-rect rectangle% allot
 TILE-SIZE COLS * 20 + s>f Field-rect rectangle-width sf!
 TILE-SIZE ROWS * 20 + s>f Field-rect rectangle-height sf!
 
-WINDOW-WIDTH Field-rect rectangle-width sf@ f>s - 2/ constant FIELD-OFFSET-X
+WINDOW-WIDTH Field-rect rectangle-width sf@ f>s - 2/ 10 +
+constant FIELD-OFFSET-X
+WINDOW-HEIGHT Field-rect rectangle-height sf@ f>s - 2/ 10 +
+constant FIELD-OFFSET-Y
+
 FIELD-OFFSET-X 10 - s>f Field-rect rectangle-x sf!
-WINDOW-HEIGHT Field-rect rectangle-height sf@ f>s - 2/ constant FIELD-OFFSET-Y
 FIELD-OFFSET-Y 10 - s>f Field-rect rectangle-y sf!
 
+\ TEXT \
+50 constant MAIN-TEXT-SIZE
+20 constant SECONDARY-TEXT-SIZE
+
+s\" Game Over" drop constant GAME-OVER-TEXT
+
+WINDOW-WIDTH
+GAME-OVER-TEXT MAIN-TEXT-SIZE rl:measure-text
+- 2/ constant GAME-OVER-TEXT-X
+
+WINDOW-HEIGHT MAIN-TEXT-SIZE - 2/ constant GAME-OVER-TEXT-Y
+
+s\" J - Left | L - Right | K - Rotate | SPACE - Drop\0"
+drop constant GAME-HINT-TEXT
+WINDOW-WIDTH
+GAME-HINT-TEXT SECONDARY-TEXT-SIZE rl:measure-text
+- 2/ constant GAME-HINT-X
+
+WINDOW-HEIGHT SECONDARY-TEXT-SIZE - 10 - constant GAME-HINT-Y
+
+\ other \
 255 203 0 255 >Color constant Beam-color
 TILE-SIZE 2 / constant BEAM-WIDTH
 TILE-SIZE BEAM-WIDTH - 2/ constant BEAM-OFFSET
+
+0 0 0 200 >Color constant Game-over-rect-color
 
 \ \ \ \ \ \
 \ DRAWING \
@@ -104,14 +127,40 @@ TILE-SIZE BEAM-WIDTH - 2/ constant BEAM-OFFSET
   then
 ;
 
+: draw-game-hint ( -- )
+  GAME-HINT-TEXT GAME-HINT-X GAME-HINT-Y SECONDARY-TEXT-SIZE
+  FG-COLOR rl:draw-text
+;
+
 \ call the all the stuff \
-: draw ( -- f ) \ if animation
-  rl:begin-drawing
+: draw-game-insides ( -- f )
   draw-bg
   draw-field
   \ break animation
   rows-to-break-len
   dup if break-anim then
   draw-active-pice
+
+  draw-game-hint
+;
+
+: draw-game ( -- f ) \ if animation
+  rl:begin-drawing
+  draw-game-insides
+  rl:end-drawing
+;
+
+: draw-game-over ( -- )
+  rl:begin-drawing
+  \ dra the lost game
+  draw-game-insides drop
+
+  \ draw rect
+  0 GAME-OVER-TEXT-Y 10 - WINDOW-WIDTH MAIN-TEXT-SIZE 10 +
+  Game-over-rect-color rl:draw-rectangle
+
+  \ draw game over text
+  GAME-OVER-TEXT GAME-OVER-TEXT-X GAME-OVER-TEXT-Y MAIN-TEXT-SIZE
+  RED rl:draw-text
   rl:end-drawing
 ;

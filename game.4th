@@ -1,11 +1,11 @@
 0 constant LEFT
 -1 constant RIGHT
 
-: pice-to-field-ind ( n -- n )
-  dup 4 mod Pice-X +
-  swap 4 / Pice-Y + COLS * +
-  Game-field +
-;
+0 constant MENU
+1 constant PLAYING
+2 constant GAME-OVER
+
+PLAYING value Game-mode
 
 : wall-collision? ( -- f )
   Pice-X Pice-off-X + 0<

@@ -8,10 +8,10 @@
 0 value Pice-set-word
 
 0 value Pice-rotation
-0 constant UP
-1 constant RIGHT
-2 constant DOWN
-3 constant LEFT
+0 constant UP-ROT
+1 constant RIGHT-ROT
+2 constant DOWN-ROT
+3 constant LEFT-ROT
 
 variable Pice-buffer 16 allot \ 4 * 4 chars
 

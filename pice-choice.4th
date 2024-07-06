@@ -27,11 +27,11 @@ variable Next-pice-buffer 16 allot \ 4 * 4 chars
   to Pice-set-word
 
   \ reset variables
-  UP to Pice-rotation
+  UP-ROT to Pice-rotation
   0 to Pice-Y
 
   \ to get width and offset
-  UP Pice-set-word execute
+  UP-ROT Pice-set-word execute
 
   COLS Pice-width - Pice-off-X - 2/ to Pice-X
   

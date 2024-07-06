@@ -1,5 +1,5 @@
 : set-pice-I ( n -- ) \ rot
-  dup UP = swap DOWN = or
+  dup UP-ROT = swap DOWN-ROT = or
   if
     \ 0 0 0 0
     \ 1 1 1 1
@@ -19,7 +19,7 @@
 
 : set-pice-J ( n -- )
   case
-    UP of
+    UP-ROT of
       \ 0 0 0 0
       \ 2 2 2 0
       \ 0 0 2 0
@@ -28,7 +28,7 @@
       4 5 6 10 2 pice-buffer!
     endof
 
-    RIGHT of
+    RIGHT-ROT of
       \ 0 2 2 0
       \ 0 2 0 0
       \ 0 2 0 0
@@ -37,7 +37,7 @@
       1 2 5 9 2 pice-buffer!
     endof
 
-    DOWN of
+    DOWN-ROT of
       \ 2 0 0 0
       \ 2 2 2 0
       \ 0 0 0 0
@@ -46,7 +46,7 @@
       0 4 5 6 2 pice-buffer!
     endof
 
-    LEFT of
+    LEFT-ROT of
       \ 0 2 0 0
       \ 0 2 0 0
       \ 2 2 0 0
@@ -59,7 +59,7 @@
 
 : set-pice-L ( n -- )
   case
-    UP of
+    UP-ROT of
       \ 0 0 0 0
       \ 3 3 3 0
       \ 3 0 0 0 
@@ -68,7 +68,7 @@
       4 5 6 8 3 pice-buffer!
     endof
 
-    RIGHT of
+    RIGHT-ROT of
       \ 0 3 0 0
       \ 0 3 0 0
       \ 0 3 3 0
@@ -77,7 +77,7 @@
       1 5 9 10 3 pice-buffer!
     endof
 
-    DOWN of
+    DOWN-ROT of
       \ 0 0 3 0
       \ 3 3 3 0
       \ 0 0 0 0
@@ -86,7 +86,7 @@
       2 4 5 6 3 pice-buffer!
     endof
 
-    LEFT of
+    LEFT-ROT of
       \ 3 3 0 0
       \ 0 3 0 0
       \ 0 3 0 0
@@ -99,7 +99,7 @@
 
 : set-pice-T ( n -- )
   case
-    UP of
+    UP-ROT of
       \ 0 0 0 0
       \ 4 4 4 0
       \ 0 4 0 0
@@ -108,7 +108,7 @@
       4 5 6 9 4 pice-buffer!
     endof
 
-    RIGHT of
+    RIGHT-ROT of
       \ 0 4 0 0
       \ 0 4 4 0
       \ 0 4 0 0
@@ -117,7 +117,7 @@
       1 5 6 9 4 pice-buffer!
     endof
 
-    DOWN of
+    DOWN-ROT of
       \ 0 4 0 0
       \ 4 4 4 0
       \ 0 0 0 0
@@ -126,7 +126,7 @@
       1 4 5 6 4 pice-buffer!
     endof
 
-    LEFT of
+    LEFT-ROT of
       \ 0 4 0 0
       \ 4 4 0 0
       \ 0 4 0 0
@@ -147,7 +147,7 @@
 ;
 
 : set-pice-S ( n -- )
-  dup UP = swap DOWN = or
+  dup UP-ROT = swap DOWN-ROT = or
   if
     \ 0 6 6 0
     \ 6 6 0 0
@@ -166,7 +166,7 @@
 ;
 
 : set-pice-Z ( n -- )
-  dup UP = swap DOWN = or
+  dup UP-ROT = swap DOWN-ROT = or
   if
     \ 7 7 0 0
     \ 0 7 7 0

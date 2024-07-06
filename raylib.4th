@@ -24,8 +24,12 @@ c-function rl:clear-background ClearBackground a{*(Color*)} -- void
 
 c-function rl:draw-rectangle-lines-ex DrawRectangleLinesEx a{*(Rectangle*)} r a{*(Color*)} -- void
 \ c-function rl:draw-rectangle-rec DrawRectangleRec a{*(Rectangle*)} a{*(Color*)} -- void
-c-function rl:draw-rectangle-lines DrawRectangleLines n n n n a{*(Color*)} -- void
-c-function rl:draw-rectangle DrawRectangle n n n n a{*(Color*)} -- void
+c-function rl:draw-rectangle-lines DrawRectangleLines n n n n a{*(Color*)} -- void ( x y w h color )
+c-function rl:draw-rectangle DrawRectangle n n n n a{*(Color*)} -- void ( x y w h color )
+
+\ text \
+c-function rl:draw-text DrawText a n n n a{*(Color*)} -- void ( str x y size color )
+c-function rl:measure-text MeasureText a n -- n
 
 \ keys \
 \ c-function rl:is-key-down IsKeyDown n -- n
