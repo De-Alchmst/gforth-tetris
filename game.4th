@@ -7,6 +7,10 @@
 
 0 value Show-next?
 
+1 value Level
+0 value Score
+0 value Drop-bonus
+
 MENU value Game-mode
 
 : wall-collision? ( -- f )
@@ -82,11 +86,24 @@ MENU value Game-mode
 ;
 
 : drop-pice ( -- )
+  Drop-bonus
   begin
+    1+
     move-pice-down invert
   while repeat
+  1- to Drop-bonus
+;
+
+: count-score ( -- )
+  Drop-bonus 1+
+  Show-next? if 1+ 2/ then
+  Level *
+  +to Score
+
+  0 to Drop-bonus
 ;
 
 : game-update ( -- f )
   move-pice-down
+  dup if count-score then
 ;

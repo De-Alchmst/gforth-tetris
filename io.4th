@@ -3,6 +3,7 @@
   clear-field
   reset-next-pice
   PLAYING to Game-mode
+  0 to Score
 ;
 
 : read-keys-play ( -- )

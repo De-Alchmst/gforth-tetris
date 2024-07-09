@@ -1,7 +1,6 @@
 \ \ \ \
 \ VARS \
 \ \ \ \ \
-1 value Level
 0 value Selected-menu-option
 
 6 constant MENU-LENGTH

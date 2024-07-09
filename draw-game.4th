@@ -52,6 +52,7 @@ GAME-HINT-TEXT SECONDARY-TEXT-SIZE rl:measure-text
 WINDOW-HEIGHT SECONDARY-TEXT-SIZE - 10 - constant GAME-HINT-Y
 
 create Count-text 2 cells allot
+create Score-text 3 cells allot
 
 \ other \
 255 203 0 255 >Color constant Beam-color
@@ -164,15 +165,30 @@ DEF-GAME-OVER-RECT-COLOR value Game-over-rect-color
 ;
 
 : draw-next-pice ( -- )
-  s\" Next Pice:\0" drop 10 30 SECONDARY-TEXT-SIZE Fg-color rl:draw-text
-  preview-buffer 80 60 draw-pice-buf-pos
+  s\" Next Pice:\0" drop 10 60 SECONDARY-TEXT-SIZE Fg-color rl:draw-text
+  preview-buffer 80 90 draw-pice-buf-pos
 ;
 
-: count-reset ( -- )
+: score-text-reset ( -- )
+  s" Score: " Score-text swap move
+  3 cells 1- 7 ?do
+    32 Score-text i + c! ( space )
+  loop
+  0 Score-text 3 cells 1- + c!
+;
+
+: score-displey ( -- )
+  score-text-reset
+  Score s>d <# #s #> \ convert to string 
+  Score-text 7 + swap move \ copy
+  Score-text 10 30 SECONDARY-TEXT-SIZE Fg-color rl:draw-text
+;
+
+: count-text-reset ( -- )
   s\" Count:     \0" Count-text swap move ; \ move ( src dest len -- )
 
 : count-display ( n x y -- )
-  count-reset
+  count-text-reset
   rot s>d <# #s #> \ convert number to string
   Count-text 7 + swap move \ copy to buffer
   Count-text -rot SECONDARY-TEXT-SIZE Fg-color rl:draw-text
@@ -212,6 +228,7 @@ DEF-GAME-OVER-RECT-COLOR value Game-over-rect-color
 
   draw-game-hint
   Show-next? if draw-next-pice then
+  score-displey
   draw-pice-count
 ;
 
