@@ -4,10 +4,11 @@
 1 value Level
 0 value Selected-menu-option
 
-5 constant MENU-LENGTH
+6 constant MENU-LENGTH
 create Menu-texts
   s\" PLAY\0" drop ,
   s\" < LEVEL: 1 >\0" drop ,
+  s\" SHOW NEXT [ ]\0" drop ,
   s\" SCORES\0" drop ,
   THEME-TEXTS @ ,
   s\" QUIT\0" drop ,
@@ -45,6 +46,11 @@ WINDOW-HEIGHT
   loop
 ;
 
+: refresh-menu-text ( -- )
+  THEME-TEXTS Selected-theme cells + @ Menu-texts 4 cells + !
+  set-menu-rects
+;
+
 : menu-next ( -- )
   Selected-menu-option 1+ MENU-LENGTH mod to Selected-menu-option ;
 
@@ -52,21 +58,25 @@ WINDOW-HEIGHT
   Selected-menu-option
   dup 0= if drop MENU-LENGTH then 1- to Selected-menu-option ;
 
+: toggle-show-next ( -- )
+  Show-next? dup 0= to Show-next?
+
+  if 32 ( space ) else 'x' then
+  Menu-texts 2 cells + @ 11 + c!
+;
+
 : menu-select ( -- )
   Selected-menu-option case
     0 of PLAYING to Game-mode endof
-    4 of -1 to End? endof
+    2 of toggle-show-next endof
+    5 of -1 to End? endof
   endcase
-;
-
-: refresh-menu-text ( -- )
-  THEME-TEXTS Selected-theme cells + @ Menu-texts 3 cells + !
-  set-menu-rects
+  refresh-menu-text
 ;
 
 : menu-sideways ( f -- ) \ -1 right
   Selected-menu-option case
-    3 of change-theme endof
+    4 of change-theme endof
   endcase
 
   refresh-menu-text

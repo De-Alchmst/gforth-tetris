@@ -82,7 +82,8 @@
       endof
 
       \ select \
-      KEY-ENTER of
+      dup KEY-ENTER = over KEY-SPACE = or ?of
+        drop
         menu-select
       endof
 
@@ -105,7 +106,7 @@
 
       dup KEY-L = over KEY-RIGHT = or ?of
         drop
-        RIGHT menu-sideways
+        LEFT menu-sideways
       endof
     endcase
   repeat

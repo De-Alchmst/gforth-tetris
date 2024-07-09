@@ -5,6 +5,8 @@
 1 constant PLAYING
 2 constant GAME-OVER
 
+0 value Show-next?
+
 MENU value Game-mode
 
 : wall-collision? ( -- f )

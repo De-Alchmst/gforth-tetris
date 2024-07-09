@@ -211,7 +211,7 @@ DEF-GAME-OVER-RECT-COLOR value Game-over-rect-color
   draw-active-pice
 
   draw-game-hint
-  draw-next-pice
+  Show-next? if draw-next-pice then
   draw-pice-count
 ;
 
