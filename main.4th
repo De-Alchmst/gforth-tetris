@@ -6,6 +6,8 @@ require raylib.4th
   720 constant WINDOW-HEIGHT
   1024 constant WINDOW-WIDTH
   WINDOW-WIDTH WINDOW-HEIGHT s" tetris clone in gforth" rl:init-window
+  0 value End?
+  0.3e fvalue Max-countdown
 
 require pice-handle.4th
 require pices.4th
@@ -13,17 +15,20 @@ require field.4th
 require game.4th
 require pice-choice.4th
 require pice-preview.4th
-require draw.4th
+require draw-game.4th
+require themes.4th
+require menu.4th
+require draw-menu.4th
 require io.4th \ <- game-reset is here
 
 \ \ \ \ \ \ \ \ \ \
 \ INITIALIZE STUFF \
 \ \ \ \ \ \ \ \ \ \ \
-0.3e fvalue Max-countdown
 
 : init ( -- )
   60 rl:set-target-fps
   reset-next-pice
+  set-menu-rects
 ;
 
 \ \ \ \ \ \ \
@@ -59,6 +64,10 @@ require io.4th \ <- game-reset is here
 ;
 
 : handle-menu ( -- )
+  read-keys-menu
+  draw-menu
+
+  fdrop 0e \ keep timer at 0
 ;
 
 \ \ \ \ \ \ \ \

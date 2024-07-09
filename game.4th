@@ -5,7 +5,7 @@
 1 constant PLAYING
 2 constant GAME-OVER
 
-PLAYING value Game-mode
+MENU value Game-mode
 
 : wall-collision? ( -- f )
   Pice-X Pice-off-X + 0<

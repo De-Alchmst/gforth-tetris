@@ -1,10 +1,21 @@
 \ \ \ \ \
 \ SETUP \
 \ \ \ \ \
-
 30 constant TILE-SIZE
-WHITE constant BG-COLOR
-GRAY constant FG-COLOR
+
+WHITE value Bg-color
+GRAY value Fg-color
+
+RED value I-color
+YELLOW value J-color
+PURPLE value L-color
+PINK value T-color
+SKYBLUE value O-color
+GREEN value S-color
+BLUE value Z-color
+RED value Game-over-text-color
+
+0 0 0 200 >color constant DEF-GAME-OVER-RECT-COLOR
 
 \ setup rectangles \
 create Field-rect rectangle% allot
@@ -47,14 +58,14 @@ create Count-text 2 cells allot
 TILE-SIZE 2 / constant BEAM-WIDTH
 TILE-SIZE BEAM-WIDTH - 2/ constant BEAM-OFFSET
 
-0 0 0 200 >Color constant Game-over-rect-color
+DEF-GAME-OVER-RECT-COLOR value Game-over-rect-color
 
 \ \ \ \ \ \
 \ DRAWING \
 \ \ \ \ \ \
 
 : draw-bg ( -- )
-  BG-COLOR rl:clear-background
+  Bg-color rl:clear-background
 ;
 
 : draw-block-offset ( n x y offX offY -- )
@@ -70,17 +81,17 @@ TILE-SIZE BEAM-WIDTH - 2/ constant BEAM-OFFSET
   \ color
   case
     0 of
-      FG-COLOR rl:draw-rectangle-lines
+      Fg-color rl:draw-rectangle-lines
       exit
     endof
 
-    1 of RED endof
-    2 of YELLOW endof
-    3 of PURPLE endof
-    4 of PINK endof
-    5 of SKYBLUE endof
-    6 of GREEN endof
-    7 of BLUE endof
+    1 of I-color endof
+    2 of J-color endof
+    3 of L-color endof
+    4 of T-color endof
+    5 of O-color endof
+    6 of S-color endof
+    7 of Z-color endof
   endcase
 
   rl:draw-rectangle
@@ -91,7 +102,7 @@ TILE-SIZE BEAM-WIDTH - 2/ constant BEAM-OFFSET
 
 : draw-field ( -- )
   \ border
-  Field-rect 10e FG-COLOR rl:draw-rectangle-lines-ex
+  Field-rect 10e Fg-color rl:draw-rectangle-lines-ex
 
   \ contents
   COLS ROWS * 0 ?do
@@ -134,7 +145,7 @@ TILE-SIZE BEAM-WIDTH - 2/ constant BEAM-OFFSET
 
 : draw-game-hint ( -- )
   GAME-HINT-TEXT GAME-HINT-X GAME-HINT-Y SECONDARY-TEXT-SIZE
-  FG-COLOR rl:draw-text
+  Fg-color rl:draw-text
 ;
 
 : draw-pice-buf-pos { a x y -- }
@@ -153,7 +164,7 @@ TILE-SIZE BEAM-WIDTH - 2/ constant BEAM-OFFSET
 ;
 
 : draw-next-pice ( -- )
-  s\" Next Pice:\0" drop 10 30 SECONDARY-TEXT-SIZE FG-COLOR rl:draw-text
+  s\" Next Pice:\0" drop 10 30 SECONDARY-TEXT-SIZE Fg-color rl:draw-text
   preview-buffer 80 60 draw-pice-buf-pos
 ;
 
@@ -164,7 +175,7 @@ TILE-SIZE BEAM-WIDTH - 2/ constant BEAM-OFFSET
   count-reset
   rot s>d <# #s #> \ convert number to string
   Count-text 7 + swap move \ copy to buffer
-  Count-text -rot SECONDARY-TEXT-SIZE FG-COLOR rl:draw-text
+  Count-text -rot SECONDARY-TEXT-SIZE Fg-color rl:draw-text
 ;
 
 : draw-pice-count ( -- )
@@ -221,18 +232,18 @@ TILE-SIZE BEAM-WIDTH - 2/ constant BEAM-OFFSET
 
   \ draw game over text
   GAME-OVER-TEXT GAME-OVER-TEXT-X GAME-OVER-TEXT-Y MAIN-TEXT-SIZE
-  RED rl:draw-text
+  Game-over-text-color rl:draw-text
 
   \ draw score
-  s\" Score : 10000\0" drop 40 400 SECONDARY-TEXT-SIZE FG-COLOR rl:draw-text
+  s\" Score : 10000\0" drop 40 400 SECONDARY-TEXT-SIZE Fg-color rl:draw-text
 
   \ draw hints
   s\" R - Reset\0" drop 40 400 SECONDARY-TEXT-SIZE 10 + +
-  SECONDARY-TEXT-SIZE FG-COLOR rl:draw-text
+  SECONDARY-TEXT-SIZE Fg-color rl:draw-text
   s\" M - Menu\0" drop 40 400 SECONDARY-TEXT-SIZE 10 + 2* +
-  SECONDARY-TEXT-SIZE FG-COLOR rl:draw-text
+  SECONDARY-TEXT-SIZE Fg-color rl:draw-text
   s\" S - Scores\0" drop 40 400 SECONDARY-TEXT-SIZE 10 + 3 * +
-  SECONDARY-TEXT-SIZE FG-COLOR rl:draw-text
+  SECONDARY-TEXT-SIZE Fg-color rl:draw-text
 
   rl:end-drawing
 ;
