@@ -9,3 +9,9 @@ inspred by [tint](https://github.com/DavidGriffith/tint.git)
 - if show next enabled, divide by two (and add 1 to make up for one lost by
         division rounding)
 - multiply by current level
+
+# levels
+- there is 9 levels
+- block falls each 1/level seconds
+- level increses each 10 lines
+- first increas takes 10*level lines

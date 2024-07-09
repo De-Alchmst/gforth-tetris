@@ -7,7 +7,7 @@ require raylib.4th
   1024 constant WINDOW-WIDTH
   WINDOW-WIDTH WINDOW-HEIGHT s" tetris clone in gforth" rl:init-window
   0 value End?
-  0.3e fvalue Max-countdown
+  1e fvalue Max-countdown
 
 require pice-handle.4th
 require pices.4th
@@ -36,7 +36,7 @@ require io.4th \ <- game-reset is here
 \ \ \ \ \ \ \ \
 : handle-play ( r -- r ) \ timer
   \ don't update keys during animation
-  fdup 0e f> if read-keys-play then
+  Animation? invert if read-keys-play then
 
   \ count the down
   rl:get-frame-time f+

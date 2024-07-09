@@ -73,8 +73,12 @@ WINDOW-HEIGHT
   refresh-menu-text
 ;
 
+: update-level-menu ( -- )
+  Level s>d <# #s #> Menu-texts 1 cells + @ 9 + swap move ;
+
 : menu-sideways ( f -- ) \ -1 right
   Selected-menu-option case
+    1 of change-level update-level-menu endof
     4 of change-theme endof
   endcase
 

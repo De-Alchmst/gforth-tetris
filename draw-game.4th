@@ -3,6 +3,8 @@
 \ \ \ \ \
 30 constant TILE-SIZE
 
+0 value Animation?
+
 WHITE value Bg-color
 GRAY value Fg-color
 
@@ -53,6 +55,7 @@ WINDOW-HEIGHT SECONDARY-TEXT-SIZE - 10 - constant GAME-HINT-Y
 
 create Count-text 2 cells allot
 create Score-text 3 cells allot
+s\" Score:  \0" drop constant Level-text
 
 \ other \
 255 203 0 255 >Color constant Beam-color
@@ -165,8 +168,18 @@ DEF-GAME-OVER-RECT-COLOR value Game-over-rect-color
 ;
 
 : draw-next-pice ( -- )
-  s\" Next Pice:\0" drop 10 60 SECONDARY-TEXT-SIZE Fg-color rl:draw-text
-  preview-buffer 80 90 draw-pice-buf-pos
+  s\" Next Pice:\0" drop 10 90 SECONDARY-TEXT-SIZE Fg-color rl:draw-text
+  preview-buffer 80 120 draw-pice-buf-pos
+;
+
+: count-text-reset ( -- )
+  s\" Count:     \0" Count-text swap move ; \ move ( src dest len -- )
+
+: count-display ( n x y -- )
+  count-text-reset
+  rot s>d <# #s #> \ convert number to string
+  Count-text 7 + swap move \ copy to buffer
+  Count-text -rot SECONDARY-TEXT-SIZE Fg-color rl:draw-text
 ;
 
 : score-text-reset ( -- )
@@ -181,17 +194,13 @@ DEF-GAME-OVER-RECT-COLOR value Game-over-rect-color
   score-text-reset
   Score s>d <# #s #> \ convert to string 
   Score-text 7 + swap move \ copy
-  Score-text 10 30 SECONDARY-TEXT-SIZE Fg-color rl:draw-text
+  Score-text 10 60 SECONDARY-TEXT-SIZE Fg-color rl:draw-text
 ;
 
-: count-text-reset ( -- )
-  s\" Count:     \0" Count-text swap move ; \ move ( src dest len -- )
-
-: count-display ( n x y -- )
-  count-text-reset
-  rot s>d <# #s #> \ convert number to string
-  Count-text 7 + swap move \ copy to buffer
-  Count-text -rot SECONDARY-TEXT-SIZE Fg-color rl:draw-text
+: level-display ( -- )
+  Level s>d <# #s #>
+  Level-text 7 + swap move
+  Level-text 10 30 SECONDARY-TEXT-SIZE Fg-color rl:draw-text
 ;
 
 : draw-pice-count ( -- )
@@ -223,12 +232,14 @@ DEF-GAME-OVER-RECT-COLOR value Game-over-rect-color
   draw-field
   \ break animation
   rows-to-break-len
-  dup if break-anim then
+  dup if break-anim -1 to Animation?
+      else 0 to Animation? then
   draw-active-pice
 
   draw-game-hint
   Show-next? if draw-next-pice then
   score-displey
+  level-display
   draw-pice-count
 ;
 

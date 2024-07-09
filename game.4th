@@ -13,6 +13,20 @@
 
 MENU value Game-mode
 
+: set-max-countdown ( -- )
+  1e Level s>f f/ to Max-countdown ;
+
+: change-level ( f -- ) \ -1 increase
+  if 
+    Level 1+ 10 mod dup to Level
+    0= if 1 to Level then
+  else
+    Level dup 1 = if drop 10 then 1- to Level
+  then
+
+  set-max-countdown
+;
+
 : wall-collision? ( -- f )
   Pice-X Pice-off-X + 0<
   Pice-X Pice-width + COLS >

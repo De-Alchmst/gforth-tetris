@@ -107,7 +107,7 @@
 
       dup KEY-L = over KEY-RIGHT = or ?of
         drop
-        LEFT menu-sideways
+        RIGHT menu-sideways
       endof
     endcase
   repeat
