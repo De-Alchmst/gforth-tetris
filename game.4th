@@ -9,6 +9,8 @@
 
 1 value Selected-level
 1 value Level
+10 value To-next-level
+
 0 value Score
 0 value Drop-bonus
 
@@ -16,6 +18,15 @@ MENU value Game-mode
 
 : set-max-countdown ( -- )
   1e Level s>f f/ to Max-countdown ;
+
+: to-first-level ( -- )
+  Selected-level 10 * to To-next-level ;
+
+: level-reset ( -- )
+  Selected-level to Level
+  set-max-countdown
+  to-first-level
+;
 
 : change-level ( f -- ) \ -1 increase
   if 
@@ -25,8 +36,7 @@ MENU value Game-mode
     Selected-level dup 1 = if drop 10 then 1- to Selected-level
   then
 
-  Selected-level to Level
-  set-max-countdown
+  level-reset
 ;
 
 : wall-collision? ( -- f )

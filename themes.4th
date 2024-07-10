@@ -1,13 +1,27 @@
 0 value Selected-theme
-5 constant THEME-LENGTH
+6 constant THEME-LENGTH
 create THEME-TEXTS
   s\" < THEME: Light >\0" drop ,
   s\" < THEME: Dark >\0" drop ,
   s\" < THEME: Darker >\0" drop ,
   s\" < THEME: APERTURE >\0" drop ,
   s\" < THEME: H4x0r >\0" drop ,
+  s\" < THEME: Kanagawa >\0" drop ,
 
 255 176 0 255 >color constant APERTURE-COLOR
+
+\ kanagawa theme: https://github.com/rebelot/kanagawa.nvim
+$1f $1f $28 255 >color constant K-BG
+$dc $d7 $ba 255 >color constant K-FG
+$c3 $40 $43 255 >color constant K-RED
+$98 $bb $6c 255 >color constant K-GREEN
+$e6 $c3 $84 255 >color constant K-YELLOW
+$d2 $7e $99 255 >color constant K-PINK
+$7f $b4 $ca 255 >color constant K-BLUE
+$93 $81 $a9 255 >color constant K-MAGENTA
+$7a $a8 $9f 255 >color constant K-CYAN
+$e8 $24 $24 255 >color constant K-BRIGHT-RED
+$e9 $8a $00 255 >color constant K-ORANGE
 
 : beam-color! ( a -- )
   Beam-color
@@ -74,6 +88,23 @@ create THEME-TEXTS
       DARKGREEN beam-color!
       DARKGREEN to Game-over-rect-color
       GREEN to Game-over-text-color
+    endof
+    5 of \ KANAGAWA
+      K-BG to Bg-color
+      K-FG to Fg-color
+
+      K-RED to I-color
+      K-YELLOW to J-color
+      K-MAGENTA to L-color
+      K-PINK to T-color
+      K-CYAN to O-color
+      K-GREEN to S-color
+      K-BLUE to Z-color
+
+      DEF-GAME-OVER-RECT-COLOR to Game-over-rect-color
+      K-BRIGHT-RED to Game-over-text-color
+
+      K-ORANGE beam-color!
     endof
   endcase
 ;

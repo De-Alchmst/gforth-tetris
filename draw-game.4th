@@ -55,7 +55,7 @@ WINDOW-HEIGHT SECONDARY-TEXT-SIZE - 10 - constant GAME-HINT-Y
 
 create Count-text 2 cells allot
 create Score-text 3 cells allot
-s\" Score:  \0" drop constant Level-text
+s\" Level:  \0" drop constant Level-text
 
 \ other \
 255 203 0 255 >Color constant Beam-color

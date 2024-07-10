@@ -58,7 +58,7 @@ WINDOW-HEIGHT
   dup 0= if drop MENU-LENGTH then 1- to Selected-menu-option ;
 
 : update-show-next ( -- )
-  Show-next? .s
+  Show-next?
   if 'x' else 32 ( space ) then
   Menu-texts 2 cells + @ 11 + c!
 ;

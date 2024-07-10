@@ -4,7 +4,7 @@
   reset-next-pice
   PLAYING to Game-mode
   0 to Score
-  Selected-level to Level
+  level-reset
 ;
 
 : read-keys-play ( -- )

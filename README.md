@@ -15,3 +15,6 @@ inspred by [tint](https://github.com/DavidGriffith/tint.git)
 - block falls each 1/level seconds
 - level increses each 10 lines
 - first increas takes 10*level lines
+
+# themes
+- [Kanagawa](https://github.com/rebelot/kanagawa.nvim)
