@@ -7,6 +7,7 @@
 
 0 value Show-next?
 
+1 value Selected-level
 1 value Level
 0 value Score
 0 value Drop-bonus
@@ -18,12 +19,13 @@ MENU value Game-mode
 
 : change-level ( f -- ) \ -1 increase
   if 
-    Level 1+ 10 mod dup to Level
-    0= if 1 to Level then
+    Selected-level 1+ 10 mod dup to Selected-level
+    0= if 1 to Selected-level then
   else
-    Level dup 1 = if drop 10 then 1- to Level
+    Selected-level dup 1 = if drop 10 then 1- to Selected-level
   then
 
+  Selected-level to Level
   set-max-countdown
 ;
 

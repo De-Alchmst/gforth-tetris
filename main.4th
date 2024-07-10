@@ -19,6 +19,7 @@ require draw-game.4th
 require themes.4th
 require menu.4th
 require draw-menu.4th
+require save.4th
 require io.4th \ <- game-reset is here
 
 \ \ \ \ \ \ \ \ \ \
@@ -27,8 +28,9 @@ require io.4th \ <- game-reset is here
 
 : init ( -- )
   60 rl:set-target-fps
+  save-init
   reset-next-pice
-  set-menu-rects
+  menu-init
 ;
 
 \ \ \ \ \ \ \
@@ -77,7 +79,7 @@ require io.4th \ <- game-reset is here
   0e \ countdown
   begin
     rl:window-should-close End? or
-    if bye then
+    if save-write bye then
 
     Game-mode case
       MENU of handle-menu endof

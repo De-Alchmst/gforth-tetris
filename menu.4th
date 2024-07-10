@@ -57,11 +57,15 @@ WINDOW-HEIGHT
   Selected-menu-option
   dup 0= if drop MENU-LENGTH then 1- to Selected-menu-option ;
 
-: toggle-show-next ( -- )
-  Show-next? dup 0= to Show-next?
-
-  if 32 ( space ) else 'x' then
+: update-show-next ( -- )
+  Show-next? .s
+  if 'x' else 32 ( space ) then
   Menu-texts 2 cells + @ 11 + c!
+;
+
+: toggle-show-next ( -- )
+  Show-next? 0= to Show-next?
+  update-show-next
 ;
 
 : menu-select ( -- )
@@ -74,7 +78,7 @@ WINDOW-HEIGHT
 ;
 
 : update-level-menu ( -- )
-  Level s>d <# #s #> Menu-texts 1 cells + @ 9 + swap move ;
+  Selected-level s>d <# #s #> Menu-texts 1 cells + @ 9 + swap move ;
 
 : menu-sideways ( f -- ) \ -1 right
   Selected-menu-option case
@@ -82,5 +86,12 @@ WINDOW-HEIGHT
     4 of change-theme endof
   endcase
 
+  refresh-menu-text
+;
+
+: menu-init ( -- )
+  update-level-menu
+  apply-theme
+  update-show-next
   refresh-menu-text
 ;
