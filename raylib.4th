@@ -38,7 +38,8 @@ c-function rl:measure-text MeasureText a n -- n ( str size -- length )
 \ c-function rl:is-key-down IsKeyPressed n -- n
 \ c-function rl:is-key-down IsKeyReleased n -- n
 c-function rl:get-key-pressed GetKeyPressed -- n
-
+c-function rl:get-char-pressed GetCharPressed -- n
+c-function rl:set-exit-key SetExitKey n -- void
 \ \ \ \ \ \
 \ STURCTS \
 \ \ \ \ \ \

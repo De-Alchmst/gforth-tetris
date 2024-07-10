@@ -5,7 +5,8 @@
 1 constant PLAYING
 2 constant GAME-OVER
 3 constant SCORES
-4 constant PAUSE
+4 constant PAUSED
+5 constant NAME-INPUT
 
 0 value Show-next?
 

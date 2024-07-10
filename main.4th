@@ -17,6 +17,7 @@ require pice-choice.4th
 require pice-preview.4th
 require draw-game.4th
 require themes.4th
+require name-input.4th
 require scores.4th
 require menu.4th
 require draw-menu.4th
@@ -29,6 +30,7 @@ require io.4th \ <- game-reset is here
 \ \ \ \ \ \ \ \ \ \ \
 
 : init ( -- )
+  KEY-Q rl:set-exit-key
   60 rl:set-target-fps
   scores-init
   save-init
@@ -55,8 +57,8 @@ require io.4th \ <- game-reset is here
       add-current-pice next-pice
       \ if no space for new pice
       collision? if
-        register-score
         GAME-OVER to Game-mode
+        register-score
       then
     then
   then
@@ -91,6 +93,12 @@ require io.4th \ <- game-reset is here
   draw-pause
 ;
 
+: handle-name-input ( -- )
+  read-keys-name-input
+  name-read
+  draw-scores
+;
+
 \ \ \ \ \ \ \ \
 \ MAIN LOOPING \
 \ \ \ \ \ \ \ \ \
@@ -105,7 +113,8 @@ require io.4th \ <- game-reset is here
       PLAYING of handle-play endof
       GAME-OVER of handle-game-over endof
       SCORES of handle-scores endof
-      PAUSE of handle-pause endof
+      PAUSED of handle-pause endof
+      NAME-INPUT of handle-name-input endof
     endcase
   again
 ;

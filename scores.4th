@@ -28,8 +28,7 @@ create Scores-names  30 cells allot
 ;
 
 : add-score ( n n -- ) \ score ind
-  cells Scores-values + !
-;
+  cells Scores-values + ! ;
 
 : register-score ( -- )
   Score
@@ -38,6 +37,10 @@ create Scores-names  30 cells allot
     > if
       i shift-scores
       i add-score
+
+      Scores-names i 3 * cells + to Name-buffer
+      clear-name
+      NAME-INPUT to Game-mode
       unloop exit
     then
   loop

@@ -14,11 +14,6 @@
     dup
   while
     case
-      \ exit \
-      KEY-Q of
-        -1 to End?
-      endof
-
       \ pice movement \
       KEY-J of
         LEFT move-pice-sideways
@@ -39,13 +34,13 @@
 
       \ pause \
       KEY-P of
-        PAUSE to Game-mode
+        PAUSED to Game-mode
       endof
 
       \ debug \
-      KEY-E of
-        GAME-OVER to Game-mode
-      endof
+      \ KEY-E of
+      \   GAME-OVER to Game-mode
+      \ endof
     endcase
   repeat
   drop
@@ -58,11 +53,6 @@
     dup
   while
     case
-      \ exit \
-      KEY-Q of
-        -1 to End?
-      endof
-
       KEY-R of
         reset-game
       endof
@@ -88,11 +78,6 @@
     dup
   while
     case
-      \ exit \
-      KEY-Q of
-        -1 to End?
-      endof
-
       \ select \
       dup KEY-ENTER = over KEY-SPACE = or ?of
         drop
@@ -131,15 +116,7 @@
     rl:get-key-pressed
     dup
   while
-    case
-      \ exit \
-      KEY-Q of
-        -1 to End?
-      endof
-
-      \ else \ 
-      Prev-mode to Game-mode
-    endcase
+    Prev-mode to Game-mode
   repeat
   drop
 ;
@@ -150,14 +127,28 @@
     rl:get-key-pressed
     dup
   while
+    PLAYING to Game-mode
+  repeat
+  drop
+;
+
+: read-keys-name-input ( -- )
+  begin
+    \ read through all qued keys (0 on end)
+    rl:get-key-pressed
+    dup
+  while
     case
-      \ exit \
-      KEY-Q of
-        -1 to End?
+      KEY-BACKSPACE of
+        name-backspace
       endof
 
-      \ else \ 
-      PLAYING to Game-mode
+      KEY-ENTER of
+        Name-length 0> if
+          GAME-OVER to Game-mode
+          0 to Name-length
+        then
+      endof
     endcase
   repeat
   drop

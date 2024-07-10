@@ -70,7 +70,7 @@ WINDOW-HEIGHT
 
 : menu-select ( -- )
   Selected-menu-option case
-    0 of PLAYING to Game-mode endof
+    dup 0= over 1 = or ?of PLAYING to Game-mode endof
     2 of toggle-show-next endof
     3 of
       MENU to Prev-mode
