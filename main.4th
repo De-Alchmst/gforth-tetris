@@ -17,8 +17,10 @@ require pice-choice.4th
 require pice-preview.4th
 require draw-game.4th
 require themes.4th
+require scores.4th
 require menu.4th
 require draw-menu.4th
+require draw-scores.4th
 require save.4th
 require io.4th \ <- game-reset is here
 
@@ -28,6 +30,7 @@ require io.4th \ <- game-reset is here
 
 : init ( -- )
   60 rl:set-target-fps
+  scores-init
   save-init
   reset-next-pice
   menu-init
@@ -59,18 +62,30 @@ require io.4th \ <- game-reset is here
   draw-game if fdrop 0e then
 ;
 
-: handle-game-over ( n -- n ) \ timer
+: handle-game-over ( r -- 0e ) \ timer
   read-keys-game-over
   draw-game-over
 
   fdrop 0e \ keep timer at 0
 ;
 
-: handle-menu ( -- )
+: handle-menu ( r -- 0e )
   read-keys-menu
   draw-menu
 
   fdrop 0e \ keep timer at 0
+;
+
+: handle-scores ( r -- 0e )
+  read-keys-scores
+  draw-scores
+
+  fdrop 0e
+;
+
+: handle-pause ( r -- 0e )
+  read-keys-pause
+  draw-pause
 ;
 
 \ \ \ \ \ \ \ \
@@ -86,6 +101,8 @@ require io.4th \ <- game-reset is here
       MENU of handle-menu endof
       PLAYING of handle-play endof
       GAME-OVER of handle-game-over endof
+      SCORES of handle-scores endof
+      PAUSE of handle-pause endof
     endcase
   again
 ;

@@ -44,10 +44,12 @@ SAVE-FILE-NAME swap move
 ;
 
 : save-load ( -- )
-  save.dat slurp-file drop
+  save.dat slurp-file swap
   dup     c@ to Selected-level
   dup 1 + c@ to Selected-theme
   dup 2 + c@ to Show-next?
+
+  free
 ;
 
 : save-init ( -- )

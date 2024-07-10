@@ -15,9 +15,9 @@ PINK value T-color
 SKYBLUE value O-color
 GREEN value S-color
 BLUE value Z-color
-RED value Game-over-text-color
+RED value Message-text-color
 
-0 0 0 200 >color constant DEF-GAME-OVER-RECT-COLOR
+0 0 0 200 >color constant DEF-MESSAGE-RECT-COLOR
 
 \ setup rectangles \
 create Field-rect rectangle% allot
@@ -37,13 +37,19 @@ FIELD-OFFSET-Y 10 - s>f Field-rect rectangle-y sf!
 50 constant MAIN-TEXT-SIZE
 20 constant SECONDARY-TEXT-SIZE
 
+WINDOW-HEIGHT MAIN-TEXT-SIZE - 2/ constant MESSAGE-TEXT-Y
+
 s\" Game Over" drop constant GAME-OVER-TEXT
 
 WINDOW-WIDTH
 GAME-OVER-TEXT MAIN-TEXT-SIZE rl:measure-text
 - 2/ constant GAME-OVER-TEXT-X
 
-WINDOW-HEIGHT MAIN-TEXT-SIZE - 2/ constant GAME-OVER-TEXT-Y
+s\" PAUSE" drop constant PAUSE-TEXT
+
+WINDOW-WIDTH
+PAUSE-TEXT MAIN-TEXT-SIZE rl:measure-text
+- 2/ constant PAUSE-TEXT-X
 
 s\" J - Left | L - Right | K - Rotate | SPACE - Drop P - Pause\0"
 drop constant GAME-HINT-TEXT
@@ -62,7 +68,7 @@ s\" Level:  \0" drop constant Level-text
 TILE-SIZE 2 / constant BEAM-WIDTH
 TILE-SIZE BEAM-WIDTH - 2/ constant BEAM-OFFSET
 
-DEF-GAME-OVER-RECT-COLOR value Game-over-rect-color
+DEF-MESSAGE-RECT-COLOR value Message-rect-color
 
 \ \ \ \ \ \
 \ DRAWING \
@@ -227,6 +233,11 @@ DEF-GAME-OVER-RECT-COLOR value Game-over-rect-color
   Z-pice-count 860 510 count-display
 ;
 
+: draw-message-rect ( -- )
+  0 MESSAGE-TEXT-Y 10 - WINDOW-WIDTH MAIN-TEXT-SIZE 10 +
+  Message-rect-color rl:draw-rectangle
+;
+
 \ call the all the stuff \
 : draw-game-insides ( -- f )
   draw-bg
@@ -255,16 +266,11 @@ DEF-GAME-OVER-RECT-COLOR value Game-over-rect-color
   \ dra the lost game
   draw-game-insides drop
 
-  \ draw rect
-  0 GAME-OVER-TEXT-Y 10 - WINDOW-WIDTH MAIN-TEXT-SIZE 10 +
-  Game-over-rect-color rl:draw-rectangle
+  draw-message-rect
 
   \ draw game over text
-  GAME-OVER-TEXT GAME-OVER-TEXT-X GAME-OVER-TEXT-Y MAIN-TEXT-SIZE
-  Game-over-text-color rl:draw-text
-
-  \ draw score
-  s\" Score : 10000\0" drop 40 400 SECONDARY-TEXT-SIZE Fg-color rl:draw-text
+  GAME-OVER-TEXT GAME-OVER-TEXT-X MESSAGE-TEXT-Y MAIN-TEXT-SIZE
+  Message-text-color rl:draw-text
 
   \ draw hints
   s\" R - Reset\0" drop 40 400 SECONDARY-TEXT-SIZE 10 + +
@@ -273,6 +279,21 @@ DEF-GAME-OVER-RECT-COLOR value Game-over-rect-color
   SECONDARY-TEXT-SIZE Fg-color rl:draw-text
   s\" S - Scores\0" drop 40 400 SECONDARY-TEXT-SIZE 10 + 3 * +
   SECONDARY-TEXT-SIZE Fg-color rl:draw-text
+
+  rl:end-drawing
+;
+
+: draw-pause ( -- )
+  rl:begin-drawing
+  \ dra the lost game
+  draw-game-insides drop
+
+  \ draw rect
+  draw-message-rect
+
+  \ draw game over text
+  PAUSE-TEXT PAUSE-TEXT-X MESSAGE-TEXT-Y MAIN-TEXT-SIZE
+  Message-text-color rl:draw-text
 
   rl:end-drawing
 ;

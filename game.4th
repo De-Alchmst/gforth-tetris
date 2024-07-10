@@ -4,6 +4,8 @@
 0 constant MENU
 1 constant PLAYING
 2 constant GAME-OVER
+3 constant SCORES
+4 constant PAUSE
 
 0 value Show-next?
 

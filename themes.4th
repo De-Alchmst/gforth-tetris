@@ -42,8 +42,8 @@ $e9 $8a $00 255 >color constant K-ORANGE
   GREEN to S-color
   BLUE to Z-color
 
-  DEF-GAME-OVER-RECT-COLOR to Game-over-rect-color
-  RED to Game-over-text-color
+  DEF-MESSAGE-RECT-COLOR to Message-rect-color
+  RED to Message-text-color
 
   GOLD beam-color!
 ;
@@ -78,16 +78,16 @@ $e9 $8a $00 255 >color constant K-ORANGE
       APERTURE-COLOR to Fg-color
       APERTURE-COLOR all-pices-color!
       BLACK beam-color!
-      BLACK to Game-over-rect-color
-      APERTURE-COLOR to Game-over-text-color
+      BLACK to Message-rect-color
+      APERTURE-COLOR to Message-text-color
     endof
     4 of \ H4X0R
       BLACK to Bg-color
       DARKGREEN to Fg-color
       GREEN all-pices-color!
       DARKGREEN beam-color!
-      DARKGREEN to Game-over-rect-color
-      GREEN to Game-over-text-color
+      DARKGREEN to Message-rect-color
+      GREEN to Message-text-color
     endof
     5 of \ KANAGAWA
       K-BG to Bg-color
@@ -101,8 +101,8 @@ $e9 $8a $00 255 >color constant K-ORANGE
       K-GREEN to S-color
       K-BLUE to Z-color
 
-      DEF-GAME-OVER-RECT-COLOR to Game-over-rect-color
-      K-BRIGHT-RED to Game-over-text-color
+      DEF-MESSAGE-RECT-COLOR to Message-rect-color
+      K-BRIGHT-RED to Message-text-color
 
       K-ORANGE beam-color!
     endof

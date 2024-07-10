@@ -72,6 +72,10 @@ WINDOW-HEIGHT
   Selected-menu-option case
     0 of PLAYING to Game-mode endof
     2 of toggle-show-next endof
+    3 of
+      MENU to Prev-mode
+      SCORES to Game-mode
+    endof
     5 of -1 to End? endof
   endcase
   refresh-menu-text

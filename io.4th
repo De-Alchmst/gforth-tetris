@@ -37,6 +37,11 @@
         drop-pice
       endof
 
+      \ pause \
+      KEY-P of
+        PAUSE to Game-mode
+      endof
+
       \ debug \
       KEY-E of
         GAME-OVER to Game-mode
@@ -65,6 +70,11 @@
       KEY-M of
         reset-game
         MENU to Game-mode
+      endof
+
+      KEY-S of
+        GAME-OVER to Prev-mode
+        SCORES to Game-mode
       endof
     endcase
   repeat
@@ -110,6 +120,44 @@
         drop
         RIGHT menu-sideways
       endof
+    endcase
+  repeat
+  drop
+;
+
+: read-keys-scores ( -- )
+  begin
+    \ read through all qued keys (0 on end)
+    rl:get-key-pressed
+    dup
+  while
+    case
+      \ exit \
+      KEY-Q of
+        -1 to End?
+      endof
+
+      \ else \ 
+      Prev-mode to Game-mode
+    endcase
+  repeat
+  drop
+;
+
+: read-keys-pause ( -- )
+  begin
+    \ read through all qued keys (0 on end)
+    rl:get-key-pressed
+    dup
+  while
+    case
+      \ exit \
+      KEY-Q of
+        -1 to End?
+      endof
+
+      \ else \ 
+      PLAYING to Game-mode
     endcase
   repeat
   drop
