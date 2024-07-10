@@ -39,6 +39,18 @@ MENU value Game-mode
   level-reset
 ;
 
+: add-row-to-level ( -- )
+  Level 9 < if
+    To-next-level 1-
+    dup to To-next-level
+    0= if
+      10 to To-next-level
+      1 +to Level
+      set-max-countdown
+    then
+  then
+;
+
 : wall-collision? ( -- f )
   Pice-X Pice-off-X + 0<
   Pice-X Pice-width + COLS >

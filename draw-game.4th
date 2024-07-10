@@ -144,6 +144,7 @@ DEF-GAME-OVER-RECT-COLOR value Game-over-rect-color
   else
     drop 255 Beam-color color-a c!
     rows-to-break-shift downshift-field
+    add-row-to-level
   then
 ;
 
