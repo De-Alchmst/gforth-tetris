@@ -29,6 +29,7 @@ c-function rl:draw-rectangle DrawRectangle n n n n a{*(Color*)} -- void ( x y w 
 
 \ text \
 c-function rl:draw-text DrawText a n n n a{*(Color*)} -- void ( str x y size color )
+c-function rl:draw-text-len DrawText s n n n a{*(Color*)} -- void ( str x y size color )
 c-function rl:measure-text MeasureText a n -- n ( str size -- length )
 
 \ keys \

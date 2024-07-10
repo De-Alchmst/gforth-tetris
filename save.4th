@@ -40,16 +40,16 @@ SAVE-FILE-NAME swap move
   Show-next? over emit-file throw
 
   dup s\" \0\0\0\0\0" rot write-file throw
-  close-file
+  close-file throw
 ;
 
 : save-load ( -- )
-  save.dat slurp-file swap
+  save.dat slurp-file drop
   dup     c@ to Selected-level
   dup 1 + c@ to Selected-theme
   dup 2 + c@ to Show-next?
 
-  free
+  free throw
 ;
 
 : save-init ( -- )

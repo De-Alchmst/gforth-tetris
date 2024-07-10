@@ -10,6 +10,6 @@ create Scores-names  30 cells allot
 : scores-init ( -- )
   10 0 ?do
     s\" ---NO-ONE---\0"
-    Scores-names i 3 cells *
+    Scores-names i 3 cells * + swap move
   loop
 ;
