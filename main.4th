@@ -54,7 +54,10 @@ require io.4th \ <- game-reset is here
       \ go to the next pice
       add-current-pice next-pice
       \ if no space for new pice
-      collision? if GAME-OVER to Game-mode then
+      collision? if
+        register-score
+        GAME-OVER to Game-mode
+      then
     then
   then
 

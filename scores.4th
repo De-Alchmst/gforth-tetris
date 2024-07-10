@@ -13,3 +13,33 @@ create Scores-names  30 cells allot
     Scores-names i 3 cells * + swap move
   loop
 ;
+
+: shift-scores ( n -- )
+  dup 9 = if exit then
+  9 ?do
+    \ numbers
+    Scores-values i 1- cells + @
+    Scores-values i cells + !
+    \ names
+    Scores-names i 1- 3 * cells +
+    Scores-names i 3 * cells +
+    3 cells move
+  1 -loop
+;
+
+: add-score ( n n -- ) \ score ind
+  cells Scores-values + !
+;
+
+: register-score ( -- )
+  Score
+  10 0 ?do
+    dup Scores-values i cells + @
+    > if
+      i shift-scores
+      i add-score
+      unloop exit
+    then
+  loop
+  drop
+;

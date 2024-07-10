@@ -39,7 +39,19 @@ SAVE-FILE-NAME swap move
   Selected-theme over emit-file throw
   Show-next? over emit-file throw
 
+  \ reserverd space
   dup s\" \0\0\0\0\0" rot write-file throw
+
+  \ scores
+  10 0 ?do
+    \ write score
+    dup
+    Scores-values i cells + 1 cells rot write-file throw
+    \ write name
+    dup
+    Scores-names i 3 * cells + 3 cells rot write-file throw
+  loop
+
   close-file throw
 ;
 
@@ -48,6 +60,18 @@ SAVE-FILE-NAME swap move
   dup     c@ to Selected-level
   dup 1 + c@ to Selected-theme
   dup 2 + c@ to Show-next?
+
+  \ scores
+  10 0 ?do
+    \ score
+    dup i 4 * 1+ cells + @
+    Scores-values i cells + !
+
+    \ name
+    dup i 4 * 2 + cells +
+    Scores-names i 3 * cells +
+    3 cells move
+  loop
 
   free throw
 ;
