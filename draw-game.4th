@@ -51,7 +51,7 @@ WINDOW-WIDTH
 PAUSE-TEXT MAIN-TEXT-SIZE rl:measure-text
 - 2/ constant PAUSE-TEXT-X
 
-s\" J - Left | L - Right | K - Rotate | SPACE - Drop P - Pause\0"
+s\" J - Left | L - Right | K - Rotate | SPACE - Drop | P - Pause\0"
 drop constant GAME-HINT-TEXT
 WINDOW-WIDTH
 GAME-HINT-TEXT SECONDARY-TEXT-SIZE rl:measure-text
