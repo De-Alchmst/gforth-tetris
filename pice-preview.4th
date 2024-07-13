@@ -48,4 +48,4 @@ create Z-PREVIEW 7 c, 7 c, 0 c, 0 c,
 ;
 
 : preview-buffer ( -- a )
-  Next-pice-shape  pice-to-buf ;
+  Next-pice-shape pice-to-buf ;

@@ -49,17 +49,19 @@ create Rows-to-break 4 cells allot
 ;
 
 : remove-lines ( -- )
+  \ go through all rows
   ROWS 0 ?do
     i COLS *
-    -1
+    -1 \ mark as full
     COLS 0 ?do
-      \ leave if 0
+      \ decide otherwise if 0 found
       over i + Game-field + c@
       0= if
         drop 0 leave
       then
     loop
 
+    \ if full, add to queue
     if rows-to-break-push else drop then
       
   loop

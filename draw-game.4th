@@ -139,8 +139,8 @@ DEF-MESSAGE-RECT-COLOR value Message-rect-color
 : break-anim ( -- )
   0
   rows-to-break-row TILE-SIZE * FIELD-OFFSET-Y + BEAM-OFFSET +
-  WINDOW-WIDTH BEAM-WIDTH Beam-color
-  rl:draw-rectangle
+    WINDOW-WIDTH BEAM-WIDTH Beam-color
+    rl:draw-rectangle
 
   Beam-color color-a c@
   \ lower alpha
@@ -156,7 +156,7 @@ DEF-MESSAGE-RECT-COLOR value Message-rect-color
 
 : draw-game-hint ( -- )
   GAME-HINT-TEXT GAME-HINT-X GAME-HINT-Y SECONDARY-TEXT-SIZE
-  Fg-color rl:draw-text
+    Fg-color rl:draw-text
 ;
 
 : draw-pice-buf-pos { a x y -- }
@@ -263,7 +263,7 @@ DEF-MESSAGE-RECT-COLOR value Message-rect-color
 
 : draw-game-over ( -- )
   rl:begin-drawing
-  \ dra the lost game
+  \ draw the lost game
   draw-game-insides drop
 
   draw-message-rect

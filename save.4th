@@ -6,7 +6,7 @@
 \ 
 \ ( 10 times: )
 \  8 bytes : score
-\ 24 bytes : plyer name (null terminated => 23 usable)
+\ 24 bytes : player name (null terminated => 23 usable)
 \
 \ players are sorted from highest score to the lovest
 
