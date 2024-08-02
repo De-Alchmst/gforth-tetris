@@ -2,7 +2,8 @@
 \  1 byte  : level
 \  1 byte  : theme
 \  1 byte  : show-next
-\  5 bytes : reserved for futre use
+\  1 byte  : animation-speed
+\  4 bytes : reserved for futre use
 \ 
 \ ( 10 times: )
 \  8 bytes : score
@@ -38,9 +39,10 @@ SAVE-FILE-NAME swap move
   Selected-level over emit-file throw
   Selected-theme over emit-file throw
   Show-next? over emit-file throw
+  Animation-speed over emit-file throw
 
   \ reserverd space
-  dup s\" \0\0\0\0\0" rot write-file throw
+  dup s\" \0\0\0\0" rot write-file throw
 
   \ scores
   10 0 ?do
@@ -60,6 +62,7 @@ SAVE-FILE-NAME swap move
   dup     c@ to Selected-level
   dup 1 + c@ to Selected-theme
   dup 2 + c@ to Show-next?
+  dup 3 + c@ to Animation-speed
 
   \ scores
   10 0 ?do

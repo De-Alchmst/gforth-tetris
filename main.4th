@@ -44,7 +44,7 @@ require io.4th \ <- game-reset is here
 \ \ \ \ \ \ \ \
 : handle-play ( r -- r ) \ timer
   \ don't update keys during animation
-  Animation? invert if read-keys-play then
+  Is-Animation? invert if read-keys-play then
 
   \ count the down
   rl:get-frame-time f+

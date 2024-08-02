@@ -3,13 +3,19 @@
 \ \ \ \ \
 0 value Selected-menu-option
 
-6 constant MENU-LENGTH
+create ANIM-TEXTS
+  s\" < OFF >\0" drop ,
+  s\" < NORMAL >\0" drop ,
+  s\" < FAST >\0" drop ,
+
+7 constant MENU-LENGTH
 create Menu-texts
   s\" PLAY\0" drop ,
   s\" < LEVEL: 1 >\0" drop ,
   s\" SHOW NEXT [ ]\0" drop ,
-  s\" SCORES\0" drop ,
+  ANIM-TEXTS @ ,
   THEME-TEXTS @ ,
+  s\" SCORES\0" drop ,
   s\" QUIT\0" drop ,
 
 create Menu-rects rectangle% MENU-LENGTH * allot
@@ -72,11 +78,11 @@ WINDOW-HEIGHT
   Selected-menu-option case
     dup 0= over 1 = or ?of PLAYING to Game-mode endof
     2 of toggle-show-next endof
-    3 of
+    5 of
       MENU to Prev-mode
       SCORES to Game-mode
     endof
-    5 of -1 to End? endof
+    6 of -1 to End? endof
   endcase
   refresh-menu-text
 ;
@@ -84,9 +90,15 @@ WINDOW-HEIGHT
 : update-level-menu ( -- )
   Selected-level s>d <# #s #> Menu-texts 1 cells + @ 9 + swap move ;
 
+: update-anim-menu ( -- )
+  ANIM-TEXTS Animation-speed cells + @
+  Menu-texts 3 cells + !
+;
+
 : menu-sideways ( f -- ) \ -1 right
   Selected-menu-option case
     1 of change-level update-level-menu endof
+    3 of change-anim-speed update-anim-menu endof
     4 of change-theme endof
   endcase
 
@@ -95,6 +107,7 @@ WINDOW-HEIGHT
 
 : menu-init ( -- )
   update-level-menu
+  update-anim-menu
   apply-theme
   update-show-next
   refresh-menu-text

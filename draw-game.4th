@@ -3,7 +3,15 @@
 \ \ \ \ \
 30 constant TILE-SIZE
 
-0 value Animation?
+0 value Is-Animation?
+1 value Animation-speed
+: change-anim-speed ( f -- ) \ -1 up
+  if
+    Animation-speed 1+ 3 mod to Animation-speed
+  else
+    Animation-speed dup 0= if drop 3 then 1- to Animation-speed
+  then
+;
 
 WHITE value Bg-color
 GRAY value Fg-color
@@ -136,21 +144,31 @@ DEF-MESSAGE-RECT-COLOR value Message-rect-color
   loop
 ;
 
-: break-anim ( -- )
+: break-anim-end ( -- )
+  rows-to-break-shift downshift-field
+  add-row-to-level ;
+
+: draw-break-line ( -- )
   0
   rows-to-break-row TILE-SIZE * FIELD-OFFSET-Y + BEAM-OFFSET +
-    WINDOW-WIDTH BEAM-WIDTH Beam-color
-    rl:draw-rectangle
+  WINDOW-WIDTH BEAM-WIDTH Beam-color
+  rl:draw-rectangle
+;
+
+: anim-number ( -- n )
+  Animation-speed 1 = if 15 else 25 then ;
+
+: break-anim ( -- )
+  draw-break-line
 
   Beam-color color-a c@
   \ lower alpha
   dup 5 > if
-    15 - Beam-color color-a c!
+    anim-number - Beam-color color-a c!
   \ finish animation
   else
     drop 255 Beam-color color-a c!
-    rows-to-break-shift downshift-field
-    add-row-to-level
+    break-anim-end
   then
 ;
 
@@ -238,14 +256,21 @@ DEF-MESSAGE-RECT-COLOR value Message-rect-color
   Message-rect-color rl:draw-rectangle
 ;
 
+: handle-rowbreak ( -- )
+  rows-to-break-len
+  dup if
+    Animation-speed 0<> if
+      break-anim -1 to Is-Animation?
+    else break-anim-end then
+  else 0 to Is-Animation? then
+;
+
 \ call the all the stuff \
 : draw-game-insides ( -- f )
   draw-bg
   draw-field
-  \ break animation
-  rows-to-break-len
-  dup if break-anim -1 to Animation?
-      else 0 to Animation? then
+
+  handle-rowbreak
   draw-active-pice
 
   draw-game-hint
